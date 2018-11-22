@@ -64,7 +64,10 @@ namespace Notatnik_Oryginalny
 
         private void drukujToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            printDialog1.ShowDialog();
+            if (printDialog1.ShowDialog() == DialogResult.OK)
+            {
+                printDocument1.Print();
+            }
         }
 
         private void cofnijToolStripMenuItem_Click(object sender, EventArgs e)
@@ -109,5 +112,44 @@ namespace Notatnik_Oryginalny
             
         }
 
+        private void zaznaczWszystkoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.SelectAll();
+        }
+
+        private void godzinaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Text += DateTime.Now.ToString();
+        }
+
+        private void zawijanieWierszyToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (richTextBox1.WordWrap == true)
+            {
+                richTextBox1.WordWrap = false;
+                zawijanieWierszyToolStripMenuItem1.Checked = false;
+            }
+            else
+            {
+                richTextBox1.WordWrap = true;
+                zawijanieWierszyToolStripMenuItem1.Checked = true;
+            }
+        }
+
+        private void czcionkaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fontDialog1.ShowDialog();
+            richTextBox1.Font = fontDialog1.Font;
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            e.Graphics.DrawString(richTextBox1.Text, fontDialog1.Font, Brushes.Black, e.MarginBounds, StringFormat.GenericTypographic);
+        }
+
+        private void zamieńToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
